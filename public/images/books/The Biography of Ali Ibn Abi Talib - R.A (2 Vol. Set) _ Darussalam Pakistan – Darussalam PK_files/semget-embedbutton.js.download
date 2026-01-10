@@ -1,0 +1,237 @@
+(function (window, document) {
+  'use strict';
+	/*
+		NOTE:
+		------
+		PLACE HERE YOUR OWN JAVASCRIPT CODE IF NEEDED
+		WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR JAVASCRIPT CODE PLEASE CONSIDER WRITING YOUR SCRIPT HERE.  
+	*/
+	//console.log('Ptpl Works..');
+	//if(semgetpopupimg==''){
+		var semgetpopupimg = 'https://restock.semget.com/main-assets/img/popupbg.jpg';
+	//}
+	var curvid = '';
+	
+	var divg = '<div class="modal89 '+popupextclass+'">\
+	  <div class="modal89-container">\
+		<div class="modal89-left">\
+		  <h2 class="modal89-title">'+semgetpopupheading+'</h2>\
+		  <p class="modal89-desc">'+semgetpopupsubheading+'</p>\
+		  <form method="post" id="semgetembedform">\
+		  <div class="input-block">\
+			<label for="pname" class="input-label">'+semgetpopupformnamelabel+'</label>\
+			<input type="text" name="pname" id="semgetname" placeholder="'+semgetpopupformnameplaceholder+'" required>\
+		  </div>\
+		  <div class="input-block">\
+			<label for="email" class="input-label">'+semgetpopupformemaillabel+'</label>\
+			<input type="email" name="email" id="semgetemail" placeholder="'+semgetpopupformemailplaceholder+'" required >\
+		  </div>\
+		  <div class="modal89-buttons">\
+			<button type="submit" id="semgetembedbtn" class="input-button">'+semgetpopupformbtntext+'</button>\
+		  </div>\
+			<input type="hidden" id="embedptpledomain" value="'+shopdomain+'"  > \
+            <input type="hidden" id="embedptplproductid" value="'+embedProductSpecs.id+'"  >\
+            <input type="hidden" id="embedptplproductname" value="'+semget_embed_product_title+'"  >\
+            <input type="hidden" id="embedptplproducthandle" value="'+embedProductSpecs.handle+'"  > \
+            <input type="hidden" id="embedptplproductimage" value="'+semget_embed_product_img+'"  >\
+		  </form>\
+		  <p class="thanksmsg" id="thanksmsg" style="display:none;">'+semgetpopupformmsg+'</p>\
+		</div>\
+		<div class="modal89-right">\
+		  <img id="popupimgsrc" src="'+semgetpopupimg+'" alt="">\
+		</div>\
+		<button class="icon-button close-button">\
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">\
+				<path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path>\
+			</svg>\
+		</button>\
+	  </div>\
+	</div>';
+	var embedtemplate = document.createElement('div');
+	//document.body.innerHTML += divg;
+	embedtemplate.innerHTML = divg;
+	document.body.appendChild(embedtemplate);
+	
+	var body = document.querySelector("body");
+	var modal = document.querySelector(".modal89");
+	var modalButton = document.querySelector(".modal89-button");
+	var closeButton = document.querySelector(".close-button");
+
+	let isOpened = false;
+
+	var openModal = () => {
+	  if(modalButton.dataset.url==''){
+		modalButton.dataset.url = 'https://restock.semget.com/main-assets/img/popupbg.jpg';
+	  }
+	  document.getElementById('popupimgsrc').src = modalButton.dataset.url
+	  modal.classList.add("is-open");
+	  body.style.overflow = "hidden";
+	};
+
+	var closeModal = () => {
+	  modal.classList.remove("is-open");
+	  body.style.overflow = "initial";
+	};
+
+
+
+	modalButton.addEventListener("click", openModal);
+	closeButton.addEventListener("click", closeModal);
+
+	document.onkeydown = evt => {
+	  evt = evt || window.event;
+	  evt.keyCode === 27 ? closeModal() : false;
+	};
+	
+	
+	var myEmbedHidden = document.querySelector('form[action="/cart/add"] [name="id"]');
+	if(!myEmbedHidden){
+		myEmbedHidden = document.querySelector('form[action*="/cart/add"] [name="id"]');
+	}
+	//console.log(myEmbedHidden);
+	if(myEmbedHidden){
+		var currentValue = myEmbedHidden.value;
+		setTimeout(function myEmbedHiddenOnChange() {
+		if (myEmbedHidden.value !== currentValue) {
+		  currentValue = myEmbedHidden.value;    
+		  myEmbedHiddenChanged.call(myEmbedHidden);
+		}
+		setTimeout(myEmbedHiddenOnChange, 30);
+		}, 30);
+		function myEmbedHiddenChanged() {
+			// that's your hidden field's 'change' event
+			showEmbedBtn(myEmbedHidden.value)
+		}
+	}
+	
+	var _htmlEmbedInputElementValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value'),
+		_htmlEmbedInputElementValueSet = _htmlEmbedInputElementValue.set,_ev = document.createEvent('Event');
+		_ev.initEvent('change', true, true);
+		_htmlEmbedInputElementValue.set = function() {
+		_htmlEmbedInputElementValueSet.apply(this, [].slice.call(arguments));
+		if (this.type === 'hidden') {
+			this.dispatchEvent(_ev);
+		}
+	}
+	Object.defineProperty(HTMLInputElement.prototype, 'value', _htmlEmbedInputElementValue);
+	
+	async function showEmbedBtn( vid) {
+		//console.log('Embed-'+vid);
+		curvid = vid;
+		if(embedVariantSpecs[vid]){
+			var checkAvailable = embedVariantSpecs[vid].available;
+			if(!checkAvailable){
+				document.getElementById('mpopupLink').classList.remove('ptplhiddenit');
+				//set product data
+				document.getElementById('embedptplproductname').value = embedVariantSpecs[vid].name;
+				document.getElementById('embedptplproductimage').value = (embedVariantSpecs[vid].featured_image && embedVariantSpecs[vid].featured_image!=null) ? embedVariantSpecs[vid].featured_image.src : embedProductSpecs.featured_image;
+				// Submit modal event
+				
+			}else{
+				if(!boseid){
+					document.getElementById('mpopupLink').classList.add('ptplhiddenit');
+				}
+			}
+		}
+      
+	}
+	
+	
+	async function EmbedSubmitNow(event) {
+		event.preventDefault();
+		var xbtn = document.getElementById("semgetembedbtn");
+		var xbtnTxt = xbtn.textContent || xbtn.innerText;
+		xbtn.innerHTML = "Wait...";
+		
+		var productid = document.getElementById('embedptplproductid').value;
+		//var varientid = document.querySelectorAll('[name="id"]')[0].value;
+		var varientid = curvid;
+		var productname = document.getElementById('embedptplproductname').value;
+		if( productname == 'Default Title'){
+			productname = embedProductSpecs.title;
+		}
+		
+		var producthandle = document.getElementById('embedptplproducthandle').value;
+		var productimage = (embedVariantSpecs[varientid].featured_image && embedVariantSpecs[varientid].featured_image!=null) ? embedVariantSpecs[varientid].featured_image.src : embedProductSpecs.featured_image;
+		var customername = document.getElementById('semgetname').value;
+		var customeremail = document.getElementById('semgetemail').value;
+		var ptpledomain = document.getElementById('embedptpledomain').value;
+		var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		
+		if(customername!='' && customeremail!='' && customeremail.match(validRegex)){
+			//document.getElementById('ptplerror').innerHTML = '';
+			var result = await fetch(`https://restock.semget.com/savereq`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Access-Control-Allow-Methods": "*",
+					'Access-Control-Allow-Origin':'*',
+				},
+				body: JSON.stringify(
+					{
+						ptpledomain: ptpledomain, 
+						customer_name: customername, 
+						customer_email: customeremail,
+						product_id: productid,
+						varient_id: varientid,
+						product_name: productname,
+						product_handle: producthandle,
+						product_image: 'https:'+productimage,
+					}
+				)
+			});
+			
+			if(result.status===200){
+				var product = await result.json();
+				//closeModal();
+				xbtn.innerHTML = xbtnTxt;
+				var xmsg = document.getElementById("thanksmsg");
+				xmsg.style.display = "block";
+				setTimeout(() => {
+				  xmsg.style.display = "none";
+				  document.getElementById("semgetembedform").reset();
+				  
+				  closeModal();
+				}, 4000);
+				
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			document.getElementById('thanksmsg').innerHTML = 'Fill All Required Fields';
+		}
+
+	}
+	
+	//Attach Submit event
+	if( document.getElementById("semgetembedform") ){
+		var mainform = document.getElementById("semgetembedform");
+		mainform.addEventListener("submit", EmbedSubmitNow);
+		showEmbedBtn(embedCurVarId);
+	}
+	
+	var originalBtn = document.querySelectorAll('.ptplbtn89-open')[0];//reference to the original
+	var originalSC = document.querySelectorAll('.ptplbtn89-open')[0];//reference to the original
+    //clone and add
+    function removeClones()
+    {
+        var i,all = document.querySelectorAll('.ptplbtn89-open');
+        var scrpt = document.querySelectorAll('.semgetscript');
+        for(i=0;i<all.length;i++)
+        {
+            if (all[i] !== originalBtn)
+            {//this is a clone
+                all[i].parentNode.removeChild(all[i]);
+                scrpt[i].parentNode.removeChild(scrpt[i]);
+            }
+        }
+    }
+	if( document.querySelectorAll('.ptplbtn89-open').length > 1 ){
+		//alert(document.querySelectorAll('.ptplbtn89-open').length);
+		removeClones();
+	}  
+
+
+})(window, document);

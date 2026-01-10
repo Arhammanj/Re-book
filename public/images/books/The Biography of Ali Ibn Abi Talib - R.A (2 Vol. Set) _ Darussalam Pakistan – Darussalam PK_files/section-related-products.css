@@ -1,0 +1,12 @@
+.related-products {
+  display: block;
+}
+
+.related-products-heading {
+  display: flex;
+  gap: 5rem;
+}
+
+.related-products__heading {
+  margin: 0 0 4rem;
+}

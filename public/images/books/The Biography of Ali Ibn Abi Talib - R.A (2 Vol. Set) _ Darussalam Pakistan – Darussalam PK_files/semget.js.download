@@ -1,0 +1,269 @@
+(function (window, document) {
+  'use strict';
+	var mainelement = document.getElementById('semgetembed');
+	if(!mainelement || mainelement.length<=0){
+		console.log('Loading failed....');
+		return false;
+	}
+	
+	console.log('Loading....');
+	var curvid = '';
+	/*
+  	NOTE:
+  	------
+  	PLACE HERE YOUR OWN JAVASCRIPT CODE IF NEEDED
+  	WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR JAVASCRIPT CODE PLEASE CONSIDER WRITING YOUR SCRIPT HERE.  
+	*/
+	var cssId = 'myCss';  // you could encode the css path itself to generate id..
+	if (!document.getElementById(cssId))
+	{
+		var head  = document.getElementsByTagName('head')[0];
+		var link  = document.createElement('link');
+		link.id   = cssId;
+		link.rel  = 'stylesheet';
+		link.type = 'text/css';
+		link.href = 'https://restock.semget.com/style/semget.css';
+		link.media = 'all';
+		head.appendChild(link);
+	}
+		
+	var semgettemplate = document.createElement('div');
+	var custpopupextclass = mainelement.getAttribute('data-popupclass');
+	var custsemgetpopupheading = mainelement.getAttribute('data-popuphead');
+	var custsemgetpopupsubheading = mainelement.getAttribute('data-popupsubhead');
+	var custsemgetpopupformnamelabel = mainelement.getAttribute('data-nametext');
+	var custsemgetpopupformemaillabel = mainelement.getAttribute('data-emailtext');
+	var custsemgetpopupformbtntext = mainelement.getAttribute('data-popupbtn');
+	var custsemgetpopupformmsg = mainelement.getAttribute('data-thanksmsg');
+	var custsemgetpopupimg = mainelement.getAttribute('data-popupimg');
+	var custdivg = '<div class="modal90 '+custpopupextclass+'">\
+	  <div class="modal90-container">\
+		<div class="modal90-left">\
+		  <h2 class="modal90-title">'+custsemgetpopupheading+'</h2>\
+		  <p class="modal90-desc">'+custsemgetpopupsubheading+'</p>\
+		  <form method="post" id="custsemgetembedform">\
+		  <div class="input-block">\
+			<label for="pname" class="input-label">'+custsemgetpopupformnamelabel+'</label>\
+			<input type="text" name="pname" id="custsemgetname" placeholder="'+custsemgetpopupformnamelabel+'" required>\
+		  </div>\
+		  <div class="input-block">\
+			<label for="email" class="input-label">'+custsemgetpopupformemaillabel+'</label>\
+			<input type="email" name="email" id="custsemgetemail" placeholder="'+custsemgetpopupformemaillabel+'" required >\
+		  </div>\
+		  <div class="modal90-buttons">\
+			<button type="submit" id="custsemgetembedbtn" class="input-button">'+custsemgetpopupformbtntext+'</button>\
+		  </div>\
+			<input type="hidden" id="semgetembedptpledomain" value="'+semgetshopdomain+'"  > \
+            <input type="hidden" id="semgetembedptplproductid" value="'+semgetProductSpecs.id+'"  >\
+            <input type="hidden" id="semgetembedptplproductname" value=""  >\
+            <input type="hidden" id="semgetembedptplproducthandle" value="'+semgetProductSpecs.handle+'"  > \
+            <input type="hidden" id="semgetembedptplproductimage" value=""  >\
+		  </form>\
+		  <p class="thanksmsg" id="custthanksmsg" style="display:none;">'+custsemgetpopupformmsg+'</p>\
+		</div>\
+		<div class="modal90-right">\
+		  <img id="custpopupimgsrc" src="'+custsemgetpopupimg+'" alt="">\
+		</div>\
+		<button class="icon-button close-button semgetclose-button">\
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">\
+				<path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path>\
+			</svg>\
+		</button>\
+	  </div>\
+	</div>';
+	
+	semgettemplate.innerHTML = custdivg;
+	document.body.appendChild(semgettemplate);
+	
+	const body = document.querySelector("body");
+	const custmodal = document.querySelector(".modal90");
+	const custcloseButton = document.querySelector(".semgetclose-button");
+
+	var isOpened = false;
+
+	const custopenModal = () => {
+		custmodal.classList.add("is-open");
+		body.style.overflow = "hidden";
+	};
+
+	const custcloseModal = () => {
+		custmodal.classList.remove("is-open");
+		body.style.overflow = "initial";
+	};
+
+	custcloseButton.addEventListener("click", custcloseModal);
+
+	document.onkeydown = evt => {
+	  evt = evt || window.event;
+	  evt.keyCode === 27 ? custcloseModal() : false;
+	};
+  
+	var semgetEmbedHidden = document.querySelector('form[action="/cart/add"] [name="id"]');
+	if(!semgetEmbedHidden){
+		semgetEmbedHidden = document.querySelector('form[action*="/cart/add"] [name="id"]');
+	}
+	if(semgetEmbedHidden){
+		var semgetcurrentValue = semgetEmbedHidden.value;
+		setTimeout(function semgetEmbedHiddenOnChange() {
+		if (semgetEmbedHidden.value !== semgetcurrentValue) {
+		  semgetcurrentValue = semgetEmbedHidden.value;    
+		  semgetEmbedHiddenChanged.call(semgetEmbedHidden);
+		}
+		setTimeout(semgetEmbedHiddenOnChange, 30); 
+		}, 30);
+		function semgetEmbedHiddenChanged() {
+			// that's your hidden field's 'change' event
+			showSemgetEmbedBtn(semgetEmbedHidden.value)
+		}
+	}
+	
+	
+	async function showSemgetEmbedBtn( vid) {
+		//console.log('Embed-'+vid);
+		curvid = vid
+		if(semgetVariantSpecs[vid]){
+			var checkAvailable = semgetVariantSpecs[vid].available;
+			if(!checkAvailable){
+				var btntxt = mainelement.getAttribute('data-text');
+				var textcolor = mainelement.getAttribute('data-textcolor');
+				var buttonbg = mainelement.getAttribute('data-buttonbg');
+				var buttonborder = mainelement.getAttribute('data-buttonborder');
+				var hovercolor = mainelement.getAttribute('data-hovercolor');
+				var hovertextcolor = mainelement.getAttribute('data-hovertextcolor');
+				var width = mainelement.getAttribute('data-width');
+				var radious = mainelement.getAttribute('data-radious');
+				var btnclass = mainelement.getAttribute('data-btnclass');
+				var popupheadcolor = mainelement.getAttribute('data-popupheadcolor');
+				var popupsubheadcolor = mainelement.getAttribute('data-popupsubheadcolor');
+				var popuplabelcolor = mainelement.getAttribute('data-popuplabelcolor');
+				var popupbtncolor = mainelement.getAttribute('data-popupbtncolor');
+				var popupbtntextcolor = mainelement.getAttribute('data-popupbtntextcolor');
+				var thanksmsgcolor = mainelement.getAttribute('data-thanksmsgcolor');
+				var btnhtml = '<style>\
+				button.semgetembedbtn{\
+					border: 3px solid '+buttonborder+';\
+					color: '+textcolor+';\
+					background: '+buttonbg+';\
+					width:'+width+'%;\
+					border-radius: '+radious+'px;\
+				}\
+				button.semgetembedbtn:hover, button.semgetembedbtn:focus{\
+					border: 3px solid '+hovercolor+';\
+					color: '+hovertextcolor+';\
+					background: '+hovercolor+';\
+					border-radius: '+radious+'px;\
+				}\
+				button.semgetembedbtn:before{\
+					background-color: '+hovercolor+';\
+					border-radius: '+radious+'px;\
+				}\
+				.modal90-title{\
+					color: '+popupheadcolor+';\
+				}\
+				.modal90-desc{\
+					color: '+popupsubheadcolor+';\
+				}\
+				.modal90 .input-label{\
+					color: '+popuplabelcolor+';\
+				}\
+				.modal90 .input-button{\
+					color: '+popupbtntextcolor+';\
+					background: '+popupbtncolor+';\
+				}\
+				.modal90 .thanksmsg{\
+					color: '+thanksmsgcolor+';\
+				}\
+				</style>\
+				<button type="button"  id="semgetpouplink"  class="semgetembedbtn modal90-button '+btnclass+'">'+btntxt+'</button>';
+				mainelement.innerHTML = '';
+				mainelement.innerHTML += btnhtml; 
+				var custmodalButton = document.querySelector(".modal90-button");
+				custmodalButton.addEventListener("click", custopenModal);
+				//set product data 
+				document.getElementById('semgetembedptplproductname').value = semgetVariantSpecs[vid].name;
+				document.getElementById('semgetembedptplproductimage').value = (semgetVariantSpecs[vid].featured_image && semgetVariantSpecs[vid].featured_image!=null) ? semgetVariantSpecs[vid].featured_image.src : semgetProductSpecs.featured_image;
+				// Submit modal event
+				//Attach Submit event
+				if( document.getElementById("custsemgetembedform") ){
+					var semgetmainform = document.getElementById("custsemgetembedform");
+					semgetmainform.addEventListener("submit", SemgetEmbedSubmitNow);
+				}
+			}else{
+				mainelement.innerHTML = '';
+			}
+		}
+      
+	}
+	
+	async function SemgetEmbedSubmitNow(event) {
+		event.preventDefault();
+		var xbtn = document.getElementById("custsemgetembedbtn");
+		var xbtnTxt = xbtn.textContent || xbtn.innerText;
+		xbtn.innerHTML = "Wait...";
+		
+		var productid = document.getElementById('semgetembedptplproductid').value;
+		//var varientid = document.querySelectorAll('[name="id"]')[0].value;
+		var varientid = curvid;
+		//alert(varientid);
+		var productname = document.getElementById('semgetembedptplproductname').value;
+		if( productname == 'Default Title'){
+			productname = semgetProductSpecs.title;
+		}
+		
+		var producthandle = document.getElementById('semgetembedptplproducthandle').value;
+		var productimage = (semgetVariantSpecs[varientid].featured_image && semgetVariantSpecs[varientid].featured_image!=null) ? semgetVariantSpecs[varientid].featured_image.src : semgetProductSpecs.featured_image;
+		var customername = document.getElementById('custsemgetname').value;
+		var customeremail = document.getElementById('custsemgetemail').value;
+		var ptpledomain = document.getElementById('semgetembedptpledomain').value;
+		var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		
+		if(customername!='' && customeremail!='' && customeremail.match(validRegex)){
+			//document.getElementById('ptplerror').innerHTML = '';
+			var result = await fetch(`https://restock.semget.com/savereq`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Access-Control-Allow-Methods": "*",
+					'Access-Control-Allow-Origin':'*',
+				},
+				body: JSON.stringify(
+					{
+						ptpledomain: ptpledomain, 
+						customer_name: customername, 
+						customer_email: customeremail,
+						product_id: productid,
+						varient_id: varientid,
+						product_name: productname,
+						product_handle: producthandle,
+						product_image: 'https:'+productimage,
+					}
+				)
+			});
+			
+			if(result.status===200){
+				var product = await result.json();
+				xbtn.innerHTML = xbtnTxt;
+				var xmsg = document.getElementById("custthanksmsg");
+				xmsg.style.display = "block";
+				setTimeout(() => {
+					xmsg.style.display = "none";
+					document.getElementById("custsemgetembedform").reset();
+					custcloseModal();
+				}, 4000);
+				
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			document.getElementById('custthanksmsg').innerHTML = 'Fill All Required Fields';
+		}
+
+	}
+	
+	if(mainelement || mainelement.length>0){
+		showSemgetEmbedBtn(semgetCurVarId);
+	}
+  
+})(window, document);
