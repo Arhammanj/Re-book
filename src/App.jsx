@@ -12,6 +12,8 @@ import Subscription from './pages/Subscription';
 import NGO from './pages/NGO';
 import Donate from './pages/Donate';
 import Dashboard from './pages/Dashboard';
+import SellerGuide from './pages/SellerGuide';
+import FAQs from './pages/FAQs';
 import './App.css';
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
               <Route path="/ngo" element={<NGO />} />
               <Route path="/donate" element={<Donate />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/seller-guide" element={<SellerGuide />} />
+              <Route path="/faqs" element={<FAQs />} />
             </Routes>
           </main>
           <Footer />

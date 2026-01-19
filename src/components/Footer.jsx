@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -13,30 +14,30 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="/marketplace">Marketplace</a></li>
-            <li><a href="/sell">Sell Books</a></li>
-            <li><a href="/ngo">NGO Partners</a></li>
-            <li><a href="/donate">Donate Books</a></li>
+            <li><Link to="/marketplace">Marketplace</Link></li>
+            <li><Link to="/sell">Sell Books</Link></li>
+            <li><Link to="/ngo">NGO Partners</Link></li>
+            <li><Link to="/donate">Donate Books</Link></li>
           </ul>
         </div>
         
         <div className="footer-section">
           <h4>For Sellers</h4>
           <ul>
-            <li><a href="/subscription">Subscription Plans</a></li>
-            <li><a href="/dashboard">Seller Dashboard</a></li>
-            <li><a href="#">Seller Guide</a></li>
-            <li><a href="#">FAQs</a></li>
+            <li><Link to="/subscription">Subscription Plans</Link></li>
+            <li><Link to="/dashboard">Seller Dashboard</Link></li>
+            <li><Link to="/seller-guide">Seller Guide</Link></li>
+            <li><Link to="/faqs">FAQs</Link></li>
           </ul>
         </div>
         
         <div className="footer-section">
           <h4>Connect</h4>
           <div className="social-links">
-            <a href="#">📘 Facebook</a>
-            <a href="#">🐦 Twitter</a>
-            <a href="#">📷 Instagram</a>
-            <a href="#">💼 LinkedIn</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">🐦 Twitter</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
           </div>
         </div>
       </div>
