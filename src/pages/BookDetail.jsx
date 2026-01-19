@@ -48,9 +48,9 @@ const BookDetail = () => {
             <p className="book-detail-author">by {book.author}</p>
 
             <div className="book-pricing-detail">
-              <div className="current-price">${book.price}</div>
-              <div className="original-price">${book.originalPrice}</div>
-              <div className="savings">Save ${(book.originalPrice - book.price).toFixed(2)}</div>
+              <div className="current-price">PKR {book.price}</div>
+              <div className="original-price">PKR {book.originalPrice}</div>
+              <div className="savings">Save PKR {(book.originalPrice - book.price).toFixed(2)}</div>
             </div>
 
             <div className="book-description">
