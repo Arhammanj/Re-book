@@ -84,10 +84,10 @@ const Home = () => {
       <div className="ribbon-banner">
         <div className="ribbon-content">
           <span className="ribbon-text">
-            ✨ New Year Sale: Up to 70% OFF on Selected Books! 🎉 Free Shipping on Orders Over $30 📚 Donate & Make a Difference 🌟 Join 10,000+ Happy Readers! 💫
+            ✨ New Year Sale: Up to 70% OFF on Selected Books! 🎉 Free Shipping on Orders Over PKR 3000 📚 Donate & Make a Difference 🌟 Join 10,000+ Happy Readers! 💫
           </span>
           <span className="ribbon-text">
-            ✨ New Year Sale: Up to 70% OFF on Selected Books! 🎉 Free Shipping on Orders Over $30 📚 Donate & Make a Difference 🌟 Join 10,000+ Happy Readers! 💫
+            ✨ New Year Sale: Up to 70% OFF on Selected Books! 🎉 Free Shipping on Orders Over PKR 3000 📚 Donate & Make a Difference 🌟 Join 10,000+ Happy Readers! 💫
           </span>
         </div>
       </div>

@@ -59,7 +59,7 @@ const Dashboard = () => {
         <div className="stat-card">
           <div className="stat-icon">💰</div>
           <div className="stat-info">
-            <div className="stat-value">${userSubscription.totalRevenue}</div>
+            <div className="stat-value">PKR {userSubscription.totalRevenue}</div>
             <div className="stat-label">Total Revenue</div>
           </div>
         </div>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                 <div className="donation-details">
                   <p><strong>Books:</strong> {donation.books.join(', ')}</p>
                   <p><strong>Tracking ID:</strong> {donation.trackingId}</p>
-                  <p><strong>Estimated Value:</strong> ${donation.amount}</p>
+                  <p><strong>Estimated Value:</strong> PKR {donation.amount}</p>
                 </div>
               </div>
             ))}

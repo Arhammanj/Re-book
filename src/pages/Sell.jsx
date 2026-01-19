@@ -136,13 +136,13 @@ const Sell = () => {
 
           <div className="form-row">
             <div className="form-group">
-              <label>Original Price ($) *</label>
+              <label>Original Price (PKR) *</label>
               <input
                 type="number"
                 name="originalPrice"
                 value={formData.originalPrice}
                 onChange={handleChange}
-                placeholder="20.00"
+                placeholder="2000"
                 step="0.01"
                 min="0.01"
                 required
@@ -150,13 +150,13 @@ const Sell = () => {
             </div>
 
             <div className="form-group">
-              <label>Your Selling Price ($) *</label>
+              <label>Your Selling Price (PKR) *</label>
               <input
                 type="number"
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
-                placeholder="12.00"
+                placeholder="1200"
                 step="0.01"
                 min="0.01"
                 required
@@ -199,7 +199,7 @@ const Sell = () => {
                 </p>
                 <p>
                   You Save Buyers: <strong>
-                    ${(parseFloat(formData.originalPrice) - parseFloat(formData.price)).toFixed(2)}
+                    PKR {(parseFloat(formData.originalPrice) - parseFloat(formData.price)).toFixed(2)}
                   </strong>
                 </p>
               </>

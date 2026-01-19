@@ -57,13 +57,13 @@ const Subscription = () => {
         <p>Calculate your savings with different plans</p>
         <div className="calculator-demo">
           <div className="demo-item">
-            <span className="demo-label">Example: Selling a book for $50</span>
+            <span className="demo-label">Example: Selling a book for PKR 5000</span>
             <div className="demo-fees">
               {subscriptionPlans.map(plan => (
                 <div key={plan.id} className="fee-comparison">
                   <span className="plan-name">{plan.icon} {plan.name}</span>
-                  <span className="fee-amount">${((50 * plan.platformFee) / 100).toFixed(2)} fee</span>
-                  <span className="you-earn">You earn: ${(50 - (50 * plan.platformFee) / 100).toFixed(2)}</span>
+                  <span className="fee-amount">PKR {((5000 * plan.platformFee) / 100).toFixed(2)} fee</span>
+                  <span className="you-earn">You earn: PKR {(5000 - (5000 * plan.platformFee) / 100).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -105,7 +105,7 @@ const Subscription = () => {
                     </div>
                   ) : (
                     <div className="price-paid">
-                      <span className="price-currency">$</span>
+                      <span className="price-currency">PKR</span>
                       <span className="price-amount">{plan.price}</span>
                       <span className="price-duration">/{plan.duration}</span>
                     </div>
@@ -152,7 +152,7 @@ const Subscription = () => {
               <div className="roi-calculation">
                 <div className="roi-row">
                   <span>Monthly subscription:</span>
-                  <strong>${plan.price}</strong>
+                  <strong>PKR {plan.price}</strong>
                 </div>
                 <div className="roi-row">
                   <span>Platform fee per sale:</span>
@@ -161,14 +161,14 @@ const Subscription = () => {
                 <div className="roi-highlight">
                   <p>Break-even at:</p>
                   <div className="breakeven">
-                    ${(plan.price / ((10 - plan.platformFee) / 100)).toFixed(0)}
+                    PKR {(plan.price / ((10 - plan.platformFee) / 100)).toFixed(0)}
                   </div>
                   <small>in monthly sales</small>
                 </div>
                 <div className="roi-example">
-                  <p>If you sell $500/month:</p>
+                  <p>If you sell PKR 50,000/month:</p>
                   <div className="savings-amount">
-                    Save ${calculateSavings(500, plan)}/month
+                    Save PKR {calculateSavings(50000, plan)}/month
                   </div>
                 </div>
               </div>
